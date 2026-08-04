@@ -1,0 +1,46 @@
+# ==========================================
+# Variables de entorno y credenciales
+# ==========================================
+.env
+.env.local
+.env.*.local
+crear_admin.php
+ 
+# ==========================================
+# Dependencias de Composer
+# (vendor/ se regenera con "composer install",
+# no hace falta subirlo — así el repo pesa menos)
+# ==========================================
+/vendor/
+ 
+# ==========================================
+# Archivos subidos por usuarios (imágenes de productos, etc.)
+# Descomenta si NO quieres subir las imágenes de productos al repo
+# ==========================================
+# /productosventa/
+ 
+# ==========================================
+# Archivos del sistema operativo
+# ==========================================
+.DS_Store
+Thumbs.db
+desktop.ini
+ 
+# ==========================================
+# Archivos de editores
+# ==========================================
+.vscode/
+*.suo
+*.user
+ 
+# ==========================================
+# Logs y temporales
+# ==========================================
+*.log
+error_log
+ 
+# ==========================================
+# Composer lock (opcional: normalmente SÍ se sube composer.lock
+# para fijar versiones exactas — no lo ignores a menos que sepas por qué)
+# ==========================================
+# composer.lock
