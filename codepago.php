@@ -15,6 +15,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
  
 require 'conexion.php'; // Debe definir $pdo (PDO)
+require 'crypto_helper.php';
  
 // ==========================
 // ELIMINAR PEDIDO
@@ -57,6 +58,7 @@ if (isset($_POST['update'])) {
     }
  
     $email = $pedido['email'];
+    $pedido['telefono'] = decryptData($pedido['telefono']);
  
     $openpay = Openpay::getInstance(
         $_ENV['OPENPAY_ID'],
@@ -332,6 +334,10 @@ if (isset($_POST['save'])) {
  
     $total = max(0, $subtotal - $descuentoTotal - $cuponMonto + $envioMonto);
  
+    // Cifrado de datos sensibles (teléfono y dirección) antes de guardarlos
+    $telefonoCifrado = encryptData($telefono);
+    $calleCifrada = encryptData($calle);
+ 
     try {
         $pdo->beginTransaction();
  
@@ -342,7 +348,7 @@ if (isset($_POST['save'])) {
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
         $stmt->execute([
-            $nombre, $apellidop, $apellidom, $email, $telefono, $calle,
+            $nombre, $apellidop, $apellidom, $email, $telefonoCifrado, $calleCifrada,
             $exterior, $interior, $colonia, $ciudad, $estado, $postal, $pais,
             $cuponCodigo, $cuponMonto, $descuentoTotal, $subtotal, $envioMonto, $total,
             $carritoJson, $estatus

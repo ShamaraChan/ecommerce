@@ -1,4 +1,3 @@
- · PHP
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -9,6 +8,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
  
 require 'conexion.php'; // Debe definir $pdo (PDO)
+require 'crypto_helper.php';
  
 $alert = $_SESSION['alert'] ?? null;
 unset($_SESSION['alert']);
@@ -43,6 +43,9 @@ if (!$pedido) {
     header('Location: tienda-en-linea.php');
     exit;
 }
+ 
+$pedido['telefono'] = decryptData($pedido['telefono']);
+$pedido['calle'] = decryptData($pedido['calle']);
  
 if (isset($pedido['status_pago']) && strtolower($pedido['status_pago']) === 'pagado') {
     header('Location: tienda-en-linea.php');
@@ -84,7 +87,7 @@ $ventas = $stmtVentas->fetchAll();
  
             OpenPay.setId(OPENPAY_ID);
             OpenPay.setApiKey(OPENPAY_PK);
-            OpenPay.setSandboxMode(true);
+            OpenPay.setSandboxMode(false);
             var deviceSessionId = OpenPay.deviceData.setup("payment-form", "deviceIdHiddenFieldName");
  
             $('#pay-button').on('click', function(event) {
@@ -320,6 +323,7 @@ $ventas = $stmtVentas->fetchAll();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/sweetalert2@10'></script>
+    <script src="js/menu.js"></script>
     <script>
         $(document).ready(function() {
             $('input[name="payment_method"]').on('change', function() {

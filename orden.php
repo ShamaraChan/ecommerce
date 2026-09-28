@@ -3,6 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require 'conexion.php';
+require 'crypto_helper.php';
  
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header('Location: tienda-en-linea.php');
@@ -17,6 +18,9 @@ if (!$pedido) {
     header('Location: tienda-en-linea.php');
     exit;
 }
+ 
+$pedido['telefono'] = decryptData($pedido['telefono']);
+$pedido['calle'] = decryptData($pedido['calle']);
  
 $stmtVentas = $pdo->prepare("SELECT titulo, sku, cantidad, precio, descuento FROM ventas WHERE identificador = ?");
 $stmtVentas->execute([$pedido['identificador']]);
