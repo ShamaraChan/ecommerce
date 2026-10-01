@@ -1,0 +1,18 @@
+# 1. Ocultar información y firmas del servidor
+ServerSignature Off
+Header unset X-Powered-By
+
+# 2. Encabezados de Seguridad HTTP
+<IfModule mod_headers.c>
+    # Previene que carguen tu sitio dentro de un <iframe> (Protección Clickjacking)
+    Header set X-Frame-Options "SAMEORIGIN"
+
+    # Previene que el navegador adivine el tipo de contenido MIME
+    Header set X-Content-Type-Options "nosniff"
+
+    # Activa la protección contra XSS integrada en navegadores
+    Header set X-XSS-Protection "1; mode=block"
+
+    # Define fuentes seguras para cargar recursos (Content Security Policy)
+    Header set Content-Security-Policy "default-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://code.jquery.com;"
+</IfModule>

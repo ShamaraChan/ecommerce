@@ -2,6 +2,12 @@
 require_once 'auth.php';
 exigirAdmin();
 require_once 'conexion.php';
+require_once 'csrf.php';
+
+// Bloquea cualquier solicitud POST que no incluya el token legítimo
+validar_token_csrf();
+
+
  
 // ==========================
 // ELIMINAR PRODUCTO

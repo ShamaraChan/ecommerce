@@ -1,4 +1,12 @@
 <?php
+
+require_once 'conexion.php';
+require_once 'csrf.php';
+
+// Validar que la petición POST traiga el token correcto
+validar_token_csrf();
+
+// ... El resto de tu código para validar usuario y contraseña continúa aquí ...
 session_start();
 require_once 'conexion.php';
 

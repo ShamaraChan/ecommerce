@@ -1,4 +1,36 @@
 <?php
+// ==========================================
+// 1. CONFIGURACIÓN SEGURA DE COOKIES Y SESIÓN
+// ==========================================
+if (session_status() === PHP_SESSION_NONE) {
+    ini_set('session.cookie_httponly', 1);
+    ini_set('session.use_only_cookies', 1);
+
+    session_set_cookie_params([
+        'lifetime' => 0,
+        'path' => '/',
+        'domain' => '',
+        'secure' => false,
+        'httponly' => true,
+        'samesite' => 'Lax'
+    ]);
+
+    session_start();
+}
+
+// FORZAR REEMISIÓN CON BANDERAS SEGURAS
+setcookie(session_name(), session_id(), [
+    'expires' => 0,
+    'path' => '/',
+    'domain' => '',
+    'secure' => false,
+    'httponly' => true,
+    'samesite' => 'Lax'
+]);
+
+// ==========================================
+// 2. CONEXIÓN A LA BASE DE DATOS
+// ==========================================
 $host = 'localhost';
 $db   = 'ecommerce'; //datallizer_ecommerceA
 $user = 'root'; //datallizer_novenoa

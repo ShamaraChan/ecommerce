@@ -1,5 +1,7 @@
 <?php
-session_start();
+// Incluimos la conexión (que inicia la sesión de forma segura) y las funciones CSRF
+require_once 'conexion.php';
+require_once 'csrf.php';
 
 if (!empty($_SESSION['usuario'])) {
     header('Location: dashboard.php');
@@ -26,6 +28,9 @@ unset($_SESSION['error_login']);
         <?php endif; ?>
 
         <form action="validar_login.php" method="post">
+            <!-- CAMPO OCULTO ANTI-CSRF -->
+            <?php campo_token_csrf(); ?>
+
             <label for="username">Usuario</label>
             <input id="username" name="username" type="text" required autofocus>
 
