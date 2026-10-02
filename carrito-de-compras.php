@@ -104,9 +104,25 @@ $comisionFactor = (float)$comisionValor / 100; // Ej: 0.03
         const btnNext = document.getElementById("next");
         const COMISION_FACTOR = <?= $comisionFactor ?>;
  
-        function getCart() {
-            return JSON.parse(localStorage.getItem("empresaCart")) || [];
-        }
+       function getCart() {
+    let cart = JSON.parse(localStorage.getItem("empresaCart")) || [];
+
+    // Sanitizar: solo enteros positivos, ids válidos
+    let cartValido = cart.filter(item => {
+        const cantidad = parseInt(item.cantidad, 10);
+        return item && item.id && Number.isInteger(cantidad) && cantidad > 0;
+    }).map(item => ({
+        id: item.id,
+        cantidad: parseInt(item.cantidad, 10)
+    }));
+
+    // Si había datos corruptos o manipulados, corrige el localStorage
+    if (cartValido.length !== cart.length) {
+        localStorage.setItem("empresaCart", JSON.stringify(cartValido));
+    }
+
+    return cartValido;
+}   
  
         function saveCart(cart) {
             localStorage.setItem("empresaCart", JSON.stringify(cart));
