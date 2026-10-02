@@ -87,12 +87,11 @@ if (isset($_POST['update'])) {
         exit;
     }
  
-    if ($password !== '' && strlen($password) < 6) {
-        $_SESSION['alert'] = ['title' => 'La contraseña debe tener al menos 6 caracteres', 'icon' => 'error'];
+    if ($password !== '' && !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/', $password)) {
+        $_SESSION['alert'] = ['title' => 'La contraseña debe tener mínimo 8 caracteres, mayúsculas, minúsculas y números', 'icon' => 'error'];
         header('Location: usuarios.php');
         exit;
     }
- 
     try {
         if ($password !== '') {
             $sql = 'UPDATE usuarios
@@ -158,12 +157,12 @@ if (isset($_POST['save'])) {
         exit;
     }
  
-    if (strlen($password) < 6) {
-        $_SESSION['alert'] = ['title' => 'La contraseña debe tener al menos 6 caracteres', 'icon' => 'error'];
+    if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/', $password)) {
+        $_SESSION['alert'] = ['title' => 'La contraseña debe tener mínimo 8 caracteres, mayúsculas, minúsculas y números', 'icon' => 'error'];
         header('Location: usuarios.php');
         exit;
     }
- 
+    
     $rol_nombre = $rol === 1 ? 'Administrador' : 'Colaborador';
  
     $check = $pdo->prepare('SELECT id FROM usuarios WHERE username = ? LIMIT 1');

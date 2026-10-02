@@ -139,7 +139,7 @@ unset($_SESSION['alert']);
                             <label>Correo</label>
                         </div>
                         <div class="col-12 col-md-7 form-floating mb-3">
-                            <input type="password" class="form-control" name="password" placeholder="Contraseña" minlength="6" required>
+                            <input type="password" class="form-control" name="password" placeholder="Contraseña" minlength="8" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}" title="Mínimo 8 caracteres, con mayúsculas, minúsculas y números" required>
                             <label>Contraseña</label>
                         </div>
                         <div class="col-12 col-md-5 form-floating mb-3">
@@ -188,7 +188,7 @@ unset($_SESSION['alert']);
                             <label>Correo</label>
                         </div>
                         <div class="col-12 col-md-7 form-floating mb-3">
-                            <input type="password" class="form-control" name="password" placeholder="Dejar vacío para conservar" minlength="6">
+                            <input type="password" class="form-control" name="password" placeholder="Dejar vacío para conservar" minlength="8" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}" title="Mínimo 8 caracteres, con mayúsculas, minúsculas y números">
                             <label>Nueva contraseña</label>
                         </div>
                         <div class="col-12 col-md-5 form-floating mb-3">
